@@ -1,4 +1,4 @@
-// Tree Traversal - Breadth First Search
+// Tree Traversal - Depth First Search
 
 class Node {
   constructor(value) {
@@ -72,26 +72,64 @@ class BST {
     return currentNode
   }
 
-  BFS() {
-    let currentNode = this.root
+  DFSPreOrder() {
     let results = []
-    let queue = []
 
-    queue.push(currentNode)
-
-    while(queue.length) {
-      currentNode = queue.shift()
+    function traverse(currentNode) {
       results.push(currentNode.value)
       
-      if(currentNode.left) {
-        queue.push(currentNode.left)
+      if (currentNode.left) {
+        traverse(currentNode.left)
       }
-      if(currentNode.right) {
-        queue.push(currentNode.right)
+      if (currentNode.right) {
+        traverse(currentNode.right)
       }
     }
 
-    return results;
+    traverse(this.root)
+
+    return results
+  }
+
+  DFPSPostOrder() {
+    let results = []
+
+    function traverse(currentNode) {
+      if (currentNode.left) {
+        traverse(currentNode.left)
+      }
+      if (currentNode.right) {
+        traverse(currentNode.right)
+      }
+
+      results.push(currentNode.value)
+    }
+
+    traverse(this.root)
+
+    return results
+
+  }
+
+  DFSInOrder() {
+    let results = []
+
+    function traverse(currentNode) {
+      if (currentNode.left) {
+        traverse(currentNode.left)
+      }
+
+      results.push(currentNode.value)
+      
+      if (currentNode.right) {
+        traverse(currentNode.right)
+      }
+
+    }
+
+    traverse(this.root)
+
+    return results
   }
 }
 
@@ -103,10 +141,7 @@ test.insert(18)
 test.insert(27)
 test.insert(52)
 test.insert(82)
-console.log(JSON.stringify(test, null, 2))
-console.log(JSON.stringify(test.BST(), null, 2))
 
-// console.log(test.contains(86))
-// console.log(JSON.stringify(test, null, 2))
-// console.log(test.minValueNode(test.root))
-// console.log(test.minValueNode(test.root.right))
+console.log(JSON.stringify(test.DFSPreOrder(), null, 2))
+console.log(JSON.stringify(test.DFPSPostOrder(), null, 2))
+console.log(JSON.stringify(test.DFSInOrder(), null, 2))
